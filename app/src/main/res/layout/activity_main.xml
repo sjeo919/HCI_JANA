@@ -1,14 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.jana.overwatch.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.jana.overwatch.MainActivity"
+    android:background="#FFFFFF">
 
-    <ListView
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:srcCompat="@drawable/logo"
+        android:layout_marginTop="23dp"
+        android:id="@+id/logo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="LOGIN TO M2X"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login"
+        android:fontFamily="serif"
+        android:textStyle="normal|bold"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:padding="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/logo" />
+
+    <EditText
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/listView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/email"
+        android:background="@drawable/round_corners"
+        android:hint="Email Address"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="60dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:padding="10dp"
+        android:layout_below="@+id/email"
+        android:background="@drawable/round_corners"
+        android:layout_marginTop="15dp"
+        android:id="@+id/password"
+        android:hint="Password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="60dp"
+        android:fontFamily="sans-serif" />
+
+    <Button
+        android:text="Sign In"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:id="@+id/button"
+        android:background="@drawable/button_corners"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/password"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>
