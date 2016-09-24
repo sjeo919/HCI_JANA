@@ -2,4 +2,5 @@
     <string name="app_name">Overwatch</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_bean_list">BeanListActivity</string>
+    <string name="title_activity_notification">NotificationActivity</string>
 </resources>

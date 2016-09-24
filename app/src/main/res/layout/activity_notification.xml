@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.jana.overwatch.BeanListActivity">
+    tools:context="com.jana.overwatch.NotificationActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
-        android:id="@+id/bean_appBar">
+        android:id="@+id/notification_appBar">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -26,46 +26,24 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="BEANS"
+                    android:text="NOTIFICATIONS"
                     android:textSize="30dp"
-                    android:textStyle="bold"
-                    android:id="@+id/BeansTitle"/>
-
+                    android:textStyle="bold"/>
             </RelativeLayout>
-
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/layout_notification_count">
-
-                    <Button
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:lay="10dp"
-                        android:background="@drawable/noti"
-                        android:id="@+id/notification_button" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignRight="@+id/layout_notification_count"
-                    android:background="@android:drawable/ic_notification_overlay"
-                    android:text="10"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:id="@+id/num_notification"/>
-
+                <Button
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/more" />
             </RelativeLayout>
+
         </RelativeLayout>
+
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
@@ -74,8 +52,10 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ListView
-            android:id="@+id/beans_list"
+            android:id="@+id/notification_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
     </FrameLayout>
+
 </android.support.design.widget.CoordinatorLayout>
