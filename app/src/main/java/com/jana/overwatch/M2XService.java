@@ -36,7 +36,7 @@ public interface M2XService {
             @Query("redirect_uri") String uri
     );
 
-    @GET("/devices")
+    @GET("v2/devices")
     Call<List<Device>> fetchDevices(
             @Header("X-M2X-KEY") String masterKey
     );

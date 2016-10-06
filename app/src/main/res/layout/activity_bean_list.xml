@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignRight="@+id/layout_notification_count"
                     android:background="@android:drawable/ic_notification_overlay"
-                    android:text="10"
+                    android:text="0"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
                     android:textStyle="bold"
@@ -72,9 +72,13 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/beans_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            android:layout_centerInParent="true">
+
+        </android.support.v7.widget.RecyclerView>
     </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>

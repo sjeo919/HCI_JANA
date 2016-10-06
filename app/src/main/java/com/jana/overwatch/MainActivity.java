@@ -10,23 +10,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.jana.overwatch.POJO.Device;
-import com.jana.overwatch.POJO.OAuthClient;
-import com.jana.overwatch.POJO.OAuthToken;
+import com.jana.overwatch.POJO.APIResponse;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String email;
     private String password;
-    private List<Device> mDevices;
+    private Device[] mDevices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 //        mPassword = (EditText) findViewById(R.id.password);
         mSignIn = (Button) findViewById(R.id.sign_in_button);
         mMasterKey = (EditText) findViewById(R.id.masterKey);
-//
+
         successToast = Toast.makeText(getApplicationContext(), "Devices Fetched!", Toast.LENGTH_SHORT);
         failureToast = Toast.makeText(getApplicationContext(), "Connection Failed", Toast.LENGTH_SHORT);
         mProgressDialog = new ProgressDialog(MainActivity.this);
@@ -93,40 +91,94 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadDevices() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url =requestUrl + "v2/devices";
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(requestUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Moshi moshi = new Moshi.Builder().build();
+                        JsonAdapter<APIResponse> jsonAdapter = moshi.adapter(APIResponse.class);
+                        try {
+                            APIResponse apiResponse = jsonAdapter.fromJson(response);
+                            mDevices = apiResponse.devices;
+                            DeviceListHolder.getInstance().getDeviceList().clear();
 
-        M2XService serviceClient = retrofit.create(M2XService.class);
-
-        Call<List<Device>> call = serviceClient.fetchDevices(mMasterKey.getText().toString());
-
-        call.enqueue(new Callback<List<Device>>() {
+                            for (Device device : mDevices) {
+                                DeviceListHolder.getInstance().getDeviceList().add(device);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        if (mProgressDialog.isShowing()) {
+                            mProgressDialog.dismiss();
+                            successToast.show();
+                            Intent intent = new Intent(getApplicationContext(), BeanListActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                }, new Response.ErrorListener() {
             @Override
-            public void onResponse(Call<List<Device>> call, Response<List<Device>> response) {
-                try {
-                    mDevices = response.body();
-                    successToast.show();
-                    Log.d("RESPONSE", new Gson().toJson(response));
-                    Intent intent = new Intent(getApplicationContext(), BeanListActivity.class);
-                    intent.putParcelableArrayListExtra("device_list", (ArrayList<Device>) response.body());
-                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Device>> call, Throwable t) {
-                Log.d("Failure", "Fetching// " + t.toString());
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error//", error.toString());
                 if (mProgressDialog.isShowing()) {
                     mProgressDialog.dismiss();
                     failureToast.show();
                 }
             }
-        });
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("X-M2X-KEY", mMasterKey.getText().toString());
+
+                return params;
+            }
+        };
+
+        queue.add(stringRequest);
+
+        //===================================================================================
+
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(requestUrl)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        M2XService serviceClient = retrofit.create(M2XService.class);
+//        Log.d("asdf", mMasterKey.getText().toString());
+//
+//        Call<List<Device>> call = serviceClient.fetchDevices();
+//        //mMasterKey.getText().toString()
+////        call.request().url()
+//        Log.d("Request//", call.request().toString());
+//        Log.d("Request//",
+//                call.request().headers().toString());
+//        call.enqueue(new Callback<List<Device>>() {
+//            @Override
+//            public void onResponse(Call<List<Device>> call, Response<List<Device>> response) {
+//                try {
+//                    mDevices = response.body();
+//                    successToast.show();
+//                    Log.d("RESPONSE", new Gson().toJson(response));
+//                    Intent intent = new Intent(getApplicationContext(), BeanListActivity.class);
+//                    intent.putParcelableArrayListExtra("device_list", (ArrayList<Device>) response.body());
+//                    startActivity(intent);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Device>> call, Throwable t) {
+//                Log.d("Failure", "Fetching// " + t.toString());
+//                if (mProgressDialog.isShowing()) {
+//                    mProgressDialog.dismiss();
+//                    failureToast.show();
+//                }
+//            }
+//        });
     }
 
 //    private void getAuthorised() {
