@@ -1,7 +1,9 @@
 package com.jana.overwatch;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.jana.overwatch.POJO.Device;
 import com.jana.overwatch.POJO.APIResponse;
 import com.squareup.moshi.JsonAdapter;
@@ -35,12 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
     private Toast successToast;
     private Toast failureToast;
-
-    private String authorisationUrl = "https://m2x.att.com";
-    private String tokenUrl = "https://api-m2x.att.com";
-    private String requestUrl = "https://api-m2x.att.com/";
-    private String redirectUri = "";
-    private String mSentState = "hello1234";
+    private SharedPreferences sharedPreferences;
 
     private String mReceivedState;
     private String mCode;
@@ -53,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private String email;
     private String password;
     private Device[] mDevices;
+    private String jsonDeviceList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +67,14 @@ public class MainActivity extends AppCompatActivity {
         failureToast = Toast.makeText(getApplicationContext(), "Connection Failed", Toast.LENGTH_SHORT);
         mProgressDialog = new ProgressDialog(MainActivity.this);
 
+        sharedPreferences = getSharedPreferences("Overwatch_JANA", Context.MODE_PRIVATE);
+
         mSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!mMasterKey.getText().toString().equals("")) {
                     mProgressDialog.setIndeterminate(true);
                     mProgressDialog.setMessage("Fetching Data...");
-                    mProgressDialog.show();
 
                     loadDevices();
                 } else {
@@ -91,8 +91,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadDevices() {
+        mProgressDialog.show();
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url =requestUrl + "v2/devices";
+        String url = "https://api-m2x.att.com/v2/devices";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -108,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
                             for (Device device : mDevices) {
                                 DeviceListHolder.getInstance().getDeviceList().add(device);
                             }
+
+                            Gson gson = new Gson();
+                            jsonDeviceList = gson.toJson(DeviceListHolder.getInstance().getDeviceList());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -115,7 +119,14 @@ public class MainActivity extends AppCompatActivity {
                             mProgressDialog.dismiss();
                             successToast.show();
                             Intent intent = new Intent(getApplicationContext(), BeanListActivity.class);
+
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("Master_API_Key", mMasterKey.getText().toString());
+                            editor.putString("Device_List", jsonDeviceList);
+                            editor.commit();
+
                             startActivity(intent);
+                            finish();
                         }
                     }
                 }, new Response.ErrorListener() {

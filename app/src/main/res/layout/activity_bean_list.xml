@@ -39,43 +39,44 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/layout_notification_count">
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/layout_notification_count">-->
 
                     <Button
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="@drawable/noti"
-                        android:id="@+id/notification_button" />
+                        android:id="@+id/dropdown_button"
+                        android:background="@drawable/more"
+                        android:onClick="showPopup"/>
 
-                </RelativeLayout>
+                <!--</RelativeLayout>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignRight="@+id/layout_notification_count"
-                    android:background="@android:drawable/ic_notification_overlay"
-                    android:text="0"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:id="@+id/num_notification"/>
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignRight="@+id/layout_notification_count"-->
+                    <!--android:background="@android:drawable/ic_notification_overlay"-->
+                    <!--android:text="0"-->
+                    <!--android:textColor="#FFFFFF"-->
+                    <!--android:textSize="12sp"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:id="@+id/num_notification"/>-->
 
             </RelativeLayout>
         </RelativeLayout>
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/beans_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             android:layout_centerInParent="true">
 

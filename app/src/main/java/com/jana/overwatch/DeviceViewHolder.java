@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 public class DeviceViewHolder extends RecyclerView.ViewHolder {
 
-    protected TextView mDeviceName, mDeviceId, mDeviceUpdate;
+    protected TextView mDeviceName, mDeviceStatus, mDeviceUpdate;
 
     public DeviceViewHolder(View itemView) {
         super(itemView);
         this.mDeviceName = (TextView) itemView.findViewById(R.id.list_item_name);
-        this.mDeviceId = (TextView) itemView.findViewById(R.id.id_number);
+        this.mDeviceStatus = (TextView) itemView.findViewById(R.id.device_status);
         this.mDeviceUpdate = (TextView) itemView.findViewById(R.id.updated);
     }
 }

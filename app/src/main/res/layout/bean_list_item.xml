@@ -4,63 +4,85 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:textSize="25dp"
-            android:id="@+id/list_item_name"
-            android:text="bean"/>
-
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/list_item_name"
-            android:id="@+id/id_semicolon"
-            android:text="ID: "
-            android:layout_marginLeft="15dp"
-            />
+            android:id="@+id/bluebean_container">
 
-        <View
-            android:layout_width="5dp"
-            android:layout_height="10dp"
-            android:layout_toRightOf="@+id/id_semicolon"
-            android:layout_below="@+id/list_item_name"
-            android:id="@+id/id_placeholder"/>
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/bluebean"
+                android:background="#000000"
+                android:padding="1dp"/>
+        </RelativeLayout>
 
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/id_number"
-            android:text="051ae164a31d9a24fa31fad138800fa2"
-            android:layout_below="@+id/list_item_name"
-            android:layout_toRightOf="@+id/id_placeholder" />
+            android:layout_toRightOf="@id/bluebean_container">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Updated: "
-            android:id="@+id/updated_colon"
-            android:layout_below="@id/id_semicolon"
-            android:layout_marginLeft="15dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="25dp"
+                android:id="@+id/list_item_name"
+                android:text="bean"/>
 
-        <View
-            android:layout_width="5dp"
-            android:layout_height="10dp"
-            android:layout_toRightOf="@+id/updated_colon"
-            android:id="@+id/ra_placeholder"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/list_item_name"
+                android:id="@+id/status_semicolon"
+                android:text="Status: "
+                android:layout_marginLeft="10dp"
+                />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/ra_placeholder"
-            android:layout_below="@id/id_number"
-            android:text="2016-09-23T04:39:13.257Z"
-            android:id="@+id/updated"/>
+            <View
+                android:layout_width="5dp"
+                android:layout_height="10dp"
+                android:layout_toRightOf="@+id/status_semicolon"
+                android:layout_below="@+id/list_item_name"
+                android:id="@+id/id_placeholder"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/device_status"
+                android:text="Enabled"
+                android:layout_below="@+id/list_item_name"
+                android:layout_toRightOf="@+id/id_placeholder" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Updated: "
+                android:id="@+id/updated_colon"
+                android:layout_below="@id/status_semicolon"
+                android:layout_marginLeft="10dp"/>
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="10dp"
+                android:layout_toRightOf="@+id/updated_colon"
+                android:id="@+id/ra_placeholder"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ra_placeholder"
+                android:layout_below="@id/device_status"
+                android:text="2016-09-23T04:39:13.257Z"
+                android:id="@+id/updated"/>
+
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>
