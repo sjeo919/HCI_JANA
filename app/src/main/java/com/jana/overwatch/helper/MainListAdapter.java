@@ -1,4 +1,4 @@
-package com.jana.overwatch;
+package com.jana.overwatch.helper;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jana.overwatch.POJO.Device;
+import com.jana.overwatch.R;
 
 import java.util.List;
 

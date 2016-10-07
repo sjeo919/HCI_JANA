@@ -1,6 +1,4 @@
-package com.jana.overwatch;
-
-import android.content.SharedPreferences;
+package com.jana.overwatch.helper;
 
 import com.jana.overwatch.POJO.Device;
 

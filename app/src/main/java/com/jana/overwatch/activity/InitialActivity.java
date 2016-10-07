@@ -1,4 +1,4 @@
-package com.jana.overwatch;
+package com.jana.overwatch.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.jana.overwatch.helper.DeviceListHolder;
 import com.jana.overwatch.POJO.APIResponse;
 import com.jana.overwatch.POJO.Device;
 import com.squareup.moshi.JsonAdapter;

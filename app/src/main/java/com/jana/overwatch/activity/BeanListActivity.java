@@ -1,4 +1,4 @@
-package com.jana.overwatch;
+package com.jana.overwatch.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,12 +10,15 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jana.overwatch.helper.DeviceListHolder;
 import com.jana.overwatch.POJO.Device;
+import com.jana.overwatch.R;
+import com.jana.overwatch.helper.ItemClickSupport;
+import com.jana.overwatch.helper.MainListAdapter;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -23,7 +26,6 @@ import java.util.List;
 public class BeanListActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
 
     private List<Device> mDevices;
-    private Button mDropButton;
     private RecyclerView mDeviceRecyclerView;
     private MainListAdapter adapter;
     private SharedPreferences sharedPreferences;
@@ -46,7 +48,6 @@ public class BeanListActivity extends AppCompatActivity implements PopupMenu.OnM
         }
         sharedPreferences = getSharedPreferences("Overwatch_JANA", Context.MODE_PRIVATE);
 
-        mDropButton = (Button) findViewById(R.id.dropdown_button);
         mDeviceRecyclerView = (RecyclerView) findViewById(R.id.beans_list);
         mDeviceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

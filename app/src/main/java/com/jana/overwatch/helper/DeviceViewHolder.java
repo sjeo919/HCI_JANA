@@ -1,8 +1,10 @@
-package com.jana.overwatch;
+package com.jana.overwatch.helper;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import com.jana.overwatch.R;
 
 /**
  * Created by Owner on 2016-10-06.
