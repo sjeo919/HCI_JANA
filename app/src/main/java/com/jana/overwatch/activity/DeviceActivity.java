@@ -10,11 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -25,14 +22,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.jana.overwatch.POJO.APIResponse;
 import com.jana.overwatch.R;
 import com.jana.overwatch.helper.DeviceListHolder;
 import com.jana.overwatch.POJO.Device;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +34,7 @@ public class DeviceActivity extends AppCompatActivity {
     private Device mDevice;
     final Context mContext = this;
     private Button mEditButton;
+    private int devicePosition;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -49,9 +43,9 @@ public class DeviceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_device);
 
         Intent incomingIntent = getIntent();
-        int devicePos = incomingIntent.getIntExtra("device_position", 0);
+        int devicePosition = incomingIntent.getIntExtra("device_position", 0);
         sharedPreferences = getSharedPreferences("Overwatch_JANA", Context.MODE_PRIVATE);
-        mDevice = DeviceListHolder.getInstance().getDeviceList().get(devicePos);
+        mDevice = DeviceListHolder.getInstance().getDeviceList().get(devicePosition);
         mEditButton = (Button) findViewById(R.id.edit_button);
 
         mEditButton.setOnClickListener(new View.OnClickListener() {
@@ -66,16 +60,10 @@ public class DeviceActivity extends AppCompatActivity {
 
                 final EditText userNameInput = (EditText) promptView.findViewById(R.id.device_name_edit);
                 final EditText userDescInput = (EditText) promptView.findViewById(R.id.device_description_edit);
-                final Spinner spinner = (Spinner) promptView.findViewById(R.id.spinner);
 
                 userNameInput.setHint(mDevice.name);
                 userDescInput.setHint(mDevice.description);
                 Toast.makeText(mContext, mDevice.visibility, Toast.LENGTH_SHORT);
-
-                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(mContext, R.array.visibility_array,
-                        android.R.layout.simple_spinner_dropdown_item);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(adapter);
 
                 alertDialogBuilder
                         .setCancelable(false)
@@ -83,33 +71,10 @@ public class DeviceActivity extends AppCompatActivity {
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        if (userNameInput.getText().toString() == "") {
+                                        if (userNameInput.getText().toString().equals("")) {
                                             Toast.makeText(mContext, "Device Name is Required", Toast.LENGTH_SHORT).show();
-                                        } else if (spinner.getSelectedItem().toString().equalsIgnoreCase("public")) {
-                                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mContext);
-                                            dialogBuilder.setTitle("Security");
-                                            dialogBuilder.setMessage("Setting the device visibility to Public means unauthorised people can access your device. Are you sure you want to proceed?");
-
-                                            dialogBuilder.setCancelable(false)
-                                                    .setPositiveButton("Continue",
-                                                            new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                                    updateDevice(userNameInput.getText().toString(), userDescInput.getText().toString(), spinner.getSelectedItem().toString());
-                                                                }
-                                                            })
-                                                    .setNegativeButton("Cancel",
-                                                            new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                                    dialogInterface.dismiss();
-                                                                }
-                                                            });
-
-                                            AlertDialog dialog = dialogBuilder.create();
-                                            dialog.show();
                                         } else {
-                                            updateDevice(userNameInput.getText().toString(), userDescInput.getText().toString(), spinner.getSelectedItem().toString());
+                                            updateDevice(userNameInput.getText().toString(), userDescInput.getText().toString(), mDevice.visibility);
                                         }
                                     }
                                 })
@@ -134,6 +99,17 @@ public class DeviceActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        DeviceListHolder.getInstance().getDeviceList().remove(devicePosition);
+                        mDevice.name = name;
+                        mDevice.description = description;
+                        mDevice.visibility = visibility;
+                        DeviceListHolder.getInstance().getDeviceList().add(0, mDevice);
+                        Gson gson = new Gson();
+                        String jsonDeviceList = gson.toJson(DeviceListHolder.getInstance().getDeviceList());
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("Device_List", jsonDeviceList);
+                        editor.commit();
 
                     }
                 }, new Response.ErrorListener() {
@@ -148,8 +124,7 @@ public class DeviceActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("name", name);
                 params.put("description", description);
-                params.put("visibility", visibility.toLowerCase());
-                Log.d("FFFFFFF", params.toString());
+                params.put("visibility", visibility);
                 return params;
             }
 
@@ -162,7 +137,6 @@ public class DeviceActivity extends AppCompatActivity {
             }
         };
 
-        Log.d("FFFFFFF", stringRequest.getUrl());
         queue.add(stringRequest);
     }
 }

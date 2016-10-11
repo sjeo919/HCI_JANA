@@ -3,6 +3,7 @@ package com.jana.overwatch.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +34,7 @@ public class InitialActivity extends AppCompatActivity {
     private Toast successToast;
     private Toast failureToast;
     private SharedPreferences sharedPreferences;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,6 @@ public class InitialActivity extends AppCompatActivity {
         successToast = Toast.makeText(getApplicationContext(), "Devices Updated!", Toast.LENGTH_SHORT);
         failureToast = Toast.makeText(getApplicationContext(), "Connection Failed", Toast.LENGTH_SHORT);
 
-        Intent intent;
         sharedPreferences = getSharedPreferences("Overwatch_JANA", Context.MODE_PRIVATE);
 
         if (sharedPreferences.getString("Master_API_Key", "").length() > 1) {
@@ -69,7 +70,6 @@ public class InitialActivity extends AppCompatActivity {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            successToast.show();
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("Device_List", jsonDeviceList);
                             editor.commit();
@@ -94,7 +94,16 @@ public class InitialActivity extends AppCompatActivity {
         } else {
             intent = new Intent(this, MainActivity.class);
         }
-        startActivity(intent);
-        finish();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(intent);
+                finish();
+                successToast.show();
+            }
+        }, 2000);
+
     }
 }
