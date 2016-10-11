@@ -18,17 +18,27 @@
         <activity
             android:name=".activity.NotificationActivity"
             android:label="@string/title_activity_notification"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_NOTIFICATION"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.InitialActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activity.DeviceActivity"></activity>
+        <service
+            android:name=".MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

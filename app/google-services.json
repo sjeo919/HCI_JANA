@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "621458488836",
+    "firebase_url": "https://hci-jana.firebaseio.com",
+    "project_id": "hci-jana",
+    "storage_bucket": "hci-jana.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:621458488836:android:b69a439f4d8a8f26",
+        "android_client_info": {
+          "package_name": "com.jana.overwatch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "621458488836-tnkd6i6b2j9u84ibng2gvjao71ti8mup.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [{"current_key": "AIzaSyD6FfRwVB5aN9oC-E02piA4HpZ9KWY9GG8"}],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

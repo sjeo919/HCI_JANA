@@ -1,5 +1,7 @@
 package com.jana.overwatch.helper;
 
+import android.support.v7.widget.RecyclerView;
+
 import com.jana.overwatch.POJO.Notification;
 
 import java.util.ArrayList;
@@ -8,8 +10,10 @@ import java.util.ArrayList;
  * Created by Andrew Jeong on 2016-10-09.
  */
 
-public class NotificationListHolder {
+public class NotificationListHolder{
     private ArrayList<Notification> notificationList;
+
+
     public NotificationListHolder() {
         notificationList = new ArrayList<Notification>();
     }
@@ -19,6 +23,7 @@ public class NotificationListHolder {
     }
 
     private static NotificationListHolder holder = new NotificationListHolder();
+
     public static NotificationListHolder getInstance() {
         return holder;
     }
