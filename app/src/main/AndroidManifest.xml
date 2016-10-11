@@ -19,7 +19,9 @@
             android:name=".activity.NotificationActivity"
             android:label="@string/title_activity_notification"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.InitialActivity">
+        <activity
+            android:name=".activity.InitialActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

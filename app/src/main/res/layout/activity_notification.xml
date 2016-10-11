@@ -47,7 +47,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -59,10 +59,14 @@
             android:textSize="20dp"
             android:gravity="center"/>
 
-        <ListView
-            android:id="@+id/notification_list"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/noti_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            android:layout_centerInParent="true">
+
+        </android.support.v7.widget.RecyclerView>
 
     </FrameLayout>
 
