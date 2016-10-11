@@ -54,6 +54,8 @@ public class BeanListActivity extends AppCompatActivity implements PopupMenu.OnM
         adapter = new MainListAdapter(getApplicationContext(), mDevices);
         mDeviceRecyclerView.setAdapter(adapter);
 
+        adapter.notifyDataSetChanged();
+
         ItemClickSupport.addTo(mDeviceRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
