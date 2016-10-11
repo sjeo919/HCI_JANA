@@ -26,6 +26,8 @@ import com.jana.overwatch.R;
 import com.jana.overwatch.helper.DeviceListHolder;
 import com.jana.overwatch.POJO.Device;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -99,7 +101,7 @@ public class DeviceActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        DeviceListHolder.getInstance().getDeviceList().remove(devicePosition);
+                        DeviceListHolder.getInstance().getDeviceList().remove(mDevice);
                         mDevice.name = name;
                         mDevice.description = description;
                         mDevice.visibility = visibility;
