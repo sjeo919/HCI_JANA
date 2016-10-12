@@ -35,6 +35,13 @@ public class BeanListActivity extends AppCompatActivity implements PopupMenu.OnM
     private String jsonDeviceList;
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bean_list);
@@ -56,6 +63,8 @@ public class BeanListActivity extends AppCompatActivity implements PopupMenu.OnM
 
         adapter = new MainListAdapter(getApplicationContext(), mDevices);
         mDeviceRecyclerView.setAdapter(adapter);
+
+        adapter.notifyDataSetChanged();
 
         ItemClickSupport.addTo(mDeviceRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
