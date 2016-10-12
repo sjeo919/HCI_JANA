@@ -15,7 +15,7 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder {
 
     public NotificationViewHolder(View itemView) {
         super(itemView);
-        this.mNotificationTitle = (TextView) itemView.findViewById(R.id.list_item_name);
-        this.mNotificationBody = (TextView) itemView.findViewById(R.id.device_status);
+        this.mNotificationTitle = (TextView) itemView.findViewById(R.id.notification_title);
+        this.mNotificationBody = (TextView) itemView.findViewById(R.id.notification_body);
     }
 }

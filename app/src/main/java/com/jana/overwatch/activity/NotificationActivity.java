@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jana.overwatch.R;
-import com.jana.overwatch.helper.MainListAdapter;
 import com.jana.overwatch.helper.NotificationListAdapter;
 import com.jana.overwatch.helper.NotificationListHolder;
 import com.jana.overwatch.POJO.Notification;
@@ -37,14 +36,17 @@ public class NotificationActivity extends AppCompatActivity {
         mNotifications = NotificationListHolder.getInstance().getNotificationList();
         if(mNotifications.size() == 0) {
             jsonNotificationList = sharedPreferences.getString("Notification_List", "");
-
-            Type type = new TypeToken<List<Notification>>(){}.getType();
-            mNotifications = gson.fromJson(jsonNotificationList, type);
+            if (!jsonNotificationList.equals("null")){
+                Type type = new TypeToken<List<Notification>>(){}.getType();
+                mNotifications = gson.fromJson(jsonNotificationList, type);
+            }
         }
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mNotifications.add(new Notification(extras.getString("title"), extras.getString("body")));
+
+            Notification no = new Notification(extras.getString("title"), extras.getString("body"));
+            mNotifications.add(no);
         }
 
         jsonNotificationList = gson.toJson(mNotifications);
@@ -52,10 +54,10 @@ public class NotificationActivity extends AppCompatActivity {
         sharedPreferences.edit().putString("Notification_List", jsonNotificationList).commit();
 
         //update the UI - notification list
-        mNotificationRecyclerView = (RecyclerView) findViewById(R.id.beans_list);
+        mNotificationRecyclerView = (RecyclerView) findViewById(R.id.noti_list);
         mNotificationRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new MainListAdapter(getApplicationContext(), mNotifications);
+        adapter = new NotificationListAdapter(getApplicationContext(), mNotifications);
         mNotificationRecyclerView.setAdapter(adapter);
 
     }
