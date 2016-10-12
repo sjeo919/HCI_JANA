@@ -28,6 +28,15 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/bluebean_container">
 
+            <ImageView
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/disabled_circle"
+                android:id="@+id/status_icon"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

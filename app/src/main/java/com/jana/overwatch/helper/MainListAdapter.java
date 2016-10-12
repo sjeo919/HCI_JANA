@@ -39,6 +39,11 @@ public class MainListAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
             holder.mDeviceName.setText(device.name);
             holder.mDeviceStatus.setText(device.status);
             holder.mDeviceUpdate.setText(UtilFunction.formatLastTimeUsed(device.updated));
+            if (device.status.equals("enabled")) {
+                holder.mDeviceStatusIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.enabled_circle));
+            } else if (device.status.equals("disabled")){
+                holder.mDeviceStatusIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.disabled_circle));
+            }
         }
     }
 
