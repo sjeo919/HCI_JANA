@@ -38,7 +38,7 @@ public class MainListAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
         if (device != null) {
             holder.mDeviceName.setText(device.name);
             holder.mDeviceStatus.setText(device.status);
-            holder.mDeviceUpdate.setText(device.updated);
+            holder.mDeviceUpdate.setText(UtilFunction.formatLastTimeUsed(device.updated));
         }
     }
 
