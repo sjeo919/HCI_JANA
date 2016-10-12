@@ -44,9 +44,7 @@ public class NotificationActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-
-            Notification no = new Notification(extras.getString("title"), extras.getString("body"));
-            mNotifications.add(no);
+            mNotifications.add(new Notification(extras.getString("title"), extras.getString("body")));
         }
 
         jsonNotificationList = gson.toJson(mNotifications);
