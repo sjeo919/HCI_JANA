@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -57,6 +58,10 @@ public class NotificationActivity extends AppCompatActivity {
 
         adapter = new NotificationListAdapter(getApplicationContext(), mNotifications);
         mNotificationRecyclerView.setAdapter(adapter);
+
+        if (mNotifications.size() > 0) {
+            findViewById(R.id.no_noti_text).setVisibility(View.INVISIBLE);
+        }
 
     }
 
