@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -26,6 +28,8 @@ import com.jana.overwatch.R;
 import com.jana.overwatch.helper.DeviceListHolder;
 import com.jana.overwatch.POJO.Device;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,7 +40,8 @@ public class DeviceActivity extends AppCompatActivity {
 
     private Device mDevice;
     final Context mContext = this;
-    private Button mEditButton;
+    private ImageButton mEditButton;
+    private TextView mDeviceName, mDeviceDescription;
     private int devicePosition;
     private SharedPreferences sharedPreferences;
 
@@ -49,7 +54,12 @@ public class DeviceActivity extends AppCompatActivity {
         int devicePosition = incomingIntent.getIntExtra("device_position", 0);
         sharedPreferences = getSharedPreferences("Overwatch_JANA", Context.MODE_PRIVATE);
         mDevice = DeviceListHolder.getInstance().getDeviceList().get(devicePosition);
-        mEditButton = (Button) findViewById(R.id.edit_button);
+        mEditButton = (ImageButton) findViewById(R.id.edit_button);
+        mDeviceName = (TextView) findViewById(R.id.bean_name_details);
+        mDeviceDescription = (TextView) findViewById(R.id.bean_description_details);
+
+        mDeviceName.setText(mDevice.name);
+        mDeviceDescription.setText(mDevice.description);
 
         mEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
