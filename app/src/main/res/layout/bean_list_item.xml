@@ -18,10 +18,18 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/bluebean"
-                android:background="#000000"
+                android:src="@drawable/bean"
                 android:padding="1dp"/>
         </RelativeLayout>
+
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/item_split_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/bluebean_container"
+            />
 
         <RelativeLayout
             android:layout_width="wrap_content"
