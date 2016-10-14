@@ -8,6 +8,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp">
 
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/thermometer"
+            android:id="@+id/noti_image"
+            android:layout_margin="20dp" />
+
         <TextView
             android:text="title"
             android:textSize="25dp"
@@ -25,13 +32,6 @@
             android:id="@+id/notification_body"
             android:layout_toRightOf="@id/noti_image"
             android:layout_below="@id/notification_title"/>
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/thermometer"
-            android:id="@+id/noti_image"
-            android:layout_margin="20dp" />
 
         <ImageView
             android:src="@drawable/item_split_line"
