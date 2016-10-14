@@ -24,12 +24,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.jana.overwatch.POJO.APIResponse;
+import com.jana.overwatch.POJO.Stream;
 import com.jana.overwatch.R;
 import com.jana.overwatch.helper.DeviceListHolder;
 import com.jana.overwatch.POJO.Device;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,9 +44,10 @@ import java.util.Map;
 public class DeviceActivity extends AppCompatActivity {
 
     private Device mDevice;
+    private Stream[] mStreams;
     final Context mContext = this;
     private ImageButton mEditButton;
-    private TextView mDeviceName, mDeviceDescription;
+    private TextView mDeviceName, mDeviceDescription, mTemperature, mMovement;
     private int devicePosition;
     private SharedPreferences sharedPreferences;
 
@@ -57,9 +63,13 @@ public class DeviceActivity extends AppCompatActivity {
         mEditButton = (ImageButton) findViewById(R.id.edit_button);
         mDeviceName = (TextView) findViewById(R.id.bean_name_details);
         mDeviceDescription = (TextView) findViewById(R.id.bean_description_details);
+        mTemperature = (TextView) findViewById(R.id.bean_temperature_details);
+        mMovement = (TextView) findViewById(R.id.bean_movement_details);
 
         mDeviceName.setText(mDevice.name);
         mDeviceDescription.setText(mDevice.description);
+
+        fetchTemperatureLog();
 
         mEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,8 +112,6 @@ public class DeviceActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
-
-        fetchTemperatureLog();
     }
 
     private void updateDevice(final String name, final String description, final String visibility) {
@@ -163,7 +171,20 @@ public class DeviceActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //To do
+                        Moshi moshi = new Moshi.Builder().build();
+                        JsonAdapter<APIResponse> jsonAdapter = moshi.adapter(APIResponse.class);
+                        try {
+                            APIResponse apiResponse = jsonAdapter.fromJson(response);
+                            mStreams = apiResponse.streams;
+
+                            for (Stream stream: mStreams) {
+                                if (stream.display_name.equals("Temperature")) {
+                                    mTemperature.setText(stream.value + "°C");
+                                }
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override

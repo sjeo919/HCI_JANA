@@ -76,9 +76,10 @@
                     android:layout_height="wrap_content"
                     android:text="Temperature"/>
                 <TextView
+                    android:id = "@+id/bean_temperature_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="28°C"
+                    android:text="-"
                     android:textSize="30dp"/>
             </LinearLayout>
 
@@ -99,9 +100,10 @@
                     android:text="Movement"
                     android:layout_gravity="center_horizontal"/>
                 <TextView
+                    android:id="@+id/bean_movement_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10m"
+                    android:text="-"
                     android:textSize="30dp"/>
             </LinearLayout>
         </LinearLayout>
