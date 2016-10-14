@@ -102,6 +102,8 @@ public class DeviceActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
+
+        fetchTemperatureLog();
     }
 
     private void updateDevice(final String name, final String description, final String visibility) {
@@ -150,6 +152,62 @@ public class DeviceActivity extends AppCompatActivity {
             }
         };
 
+        queue.add(stringRequest);
+    }
+
+    private void fetchTemperatureLog() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://api-m2x.att.com/v2/devices/" + mDevice.id + "/streams";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //To do
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error//", error.toString());
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("X-M2X-KEY", sharedPreferences.getString("Master_API_Key", ""));
+
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    private void fetchTriggerLog() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://api-m2x.att.com/v2/devices/" + mDevice.id + "/triggers/log";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //To do
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error//", error.toString());
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("X-M2X-KEY", sharedPreferences.getString("Master_API_Key", ""));
+
+                return params;
+            }
+        };
         queue.add(stringRequest);
     }
 }
