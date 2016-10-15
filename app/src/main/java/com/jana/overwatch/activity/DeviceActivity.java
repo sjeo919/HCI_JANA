@@ -25,10 +25,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.jana.overwatch.POJO.APIResponse;
+import com.jana.overwatch.POJO.Entry;
 import com.jana.overwatch.POJO.Stream;
 import com.jana.overwatch.R;
 import com.jana.overwatch.helper.DeviceListHolder;
 import com.jana.overwatch.POJO.Device;
+import com.jana.overwatch.helper.UtilFunction;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
@@ -45,6 +47,7 @@ public class DeviceActivity extends AppCompatActivity {
 
     private Device mDevice;
     private Stream[] mStreams;
+    private Entry[] mEntries;
     final Context mContext = this;
     private ImageButton mEditButton;
     private TextView mDeviceName, mDeviceDescription, mTemperature, mMovement;
@@ -70,6 +73,7 @@ public class DeviceActivity extends AppCompatActivity {
         mDeviceDescription.setText(mDevice.description);
 
         fetchTemperatureLog();
+        fetchTriggerLog();
 
         mEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,7 +216,21 @@ public class DeviceActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //To do
+                        Moshi moshi = new Moshi.Builder().build();
+                        JsonAdapter<APIResponse> jsonAdapter = moshi.adapter(APIResponse.class);
+                        try {
+                            APIResponse apiResponse = jsonAdapter.fromJson(response);
+                            mEntries = apiResponse.entries;
+
+                            for (Entry entry: mEntries) {
+                                if (entry.trigger.equals("Movement")) {
+                                    mMovement.setText(UtilFunction.formatLastTimeUsed(entry.timeStamp)+" ago");
+                                    break;
+                                }
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override

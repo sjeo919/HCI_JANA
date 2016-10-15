@@ -7,4 +7,5 @@ package com.jana.overwatch.POJO;
 public class APIResponse {
     public Device[] devices;
     public Stream[] streams;
+    public Entry[] entries;
 }
