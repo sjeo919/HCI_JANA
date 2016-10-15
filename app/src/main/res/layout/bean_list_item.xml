@@ -18,15 +18,32 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/bluebean"
-                android:background="#000000"
+                android:src="@drawable/bean"
                 android:padding="1dp"/>
         </RelativeLayout>
+
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/item_split_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/bluebean_container"
+            />
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/bluebean_container">
+
+            <ImageView
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/disabled_circle"
+                android:id="@+id/status_icon"/>
 
             <TextView
                 android:layout_width="match_parent"

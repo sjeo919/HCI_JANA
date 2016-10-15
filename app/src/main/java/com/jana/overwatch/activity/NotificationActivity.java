@@ -1,11 +1,16 @@
 package com.jana.overwatch.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
+import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,7 +22,7 @@ import com.jana.overwatch.POJO.Notification;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class NotificationActivity extends AppCompatActivity {
+public class NotificationActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
 
     private List<Notification> mNotifications;
     private RecyclerView mNotificationRecyclerView;
@@ -58,6 +63,42 @@ public class NotificationActivity extends AppCompatActivity {
         adapter = new NotificationListAdapter(getApplicationContext(), mNotifications);
         mNotificationRecyclerView.setAdapter(adapter);
 
+        if (mNotifications.size() > 0) {
+            findViewById(R.id.no_noti_text).setVisibility(View.INVISIBLE);
+        }
+
     }
 
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+
+        popup.setOnMenuItemClickListener(this);
+        popup.inflate(R.menu.notification_dropdown_menu);
+        popup.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.clear_option:
+                new AlertDialog.Builder(this)
+                        .setMessage("Are you sure?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                sharedPreferences.edit().putString("Notification_List", "null").commit();
+                                finish();
+                                startActivity(getIntent());
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .create().show();
+                return true;
+            case R.id.refresh_option:
+                finish();
+                startActivity(getIntent());
+            default:
+                return false;
+        }
+    }
 }

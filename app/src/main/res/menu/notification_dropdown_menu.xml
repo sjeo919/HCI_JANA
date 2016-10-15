@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/clear_option"
+        android:title="Clear all"/>
+    <item
+        android:id="@+id/refresh_option"
+        android:title="Refresh"/>
+
+</menu>

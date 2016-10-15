@@ -7,6 +7,32 @@
     android:fitsSystemWindows="true"
     tools:context="com.jana.overwatch.activity.NotificationActivity">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="No Notifications"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:id="@+id/no_noti_text"
+            android:visibility="visible" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/noti_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            android:layout_centerInParent="true">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </FrameLayout>
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,35 +65,12 @@
                 <Button
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@drawable/more"/>
+                    android:background="@drawable/more"
+                    android:onClick="showPopup"/>
             </RelativeLayout>
 
         </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="No Notifications"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:gravity="center"/>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/noti_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            android:layout_centerInParent="true">
-
-        </android.support.v7.widget.RecyclerView>
-
-    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>
