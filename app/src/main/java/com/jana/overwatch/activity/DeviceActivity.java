@@ -223,8 +223,8 @@ public class DeviceActivity extends AppCompatActivity {
                             mEntries = apiResponse.entries;
 
                             for (Entry entry: mEntries) {
-                                if (entry.trigger.equals("Movement")) {
-                                    mMovement.setText(UtilFunction.formatLastTimeUsed(entry.timeStamp)+" ago");
+                                if (entry.trigger.equals("Movement_Trigger")) {
+                                    mMovement.setText(UtilFunction.formatLastTimeUsed(entry.timestamp));
                                     break;
                                 }
                             }

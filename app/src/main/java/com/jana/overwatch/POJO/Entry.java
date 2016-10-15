@@ -9,11 +9,11 @@ import android.os.Parcelable;
 
 public class Entry implements Parcelable {
     public String trigger;
-    public String timeStamp;
+    public String timestamp;
 
     protected Entry(Parcel in) {
         trigger = in.readString();
-        timeStamp = in.readString();
+        timestamp = in.readString();
     }
 
     public static final Creator<Stream> CREATOR = new Creator<Stream>() {
@@ -32,6 +32,6 @@ public class Entry implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(trigger);
-        parcel.writeString(timeStamp);
+        parcel.writeString(timestamp);
     }
 }
