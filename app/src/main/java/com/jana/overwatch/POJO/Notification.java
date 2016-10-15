@@ -7,10 +7,12 @@ package com.jana.overwatch.POJO;
 public class Notification {
     public String notification_title;
     public String notification_body;
+    public String notification_type;
 
-    public Notification (String title, String body) {
+    public Notification (String title, String body, String type) {
         this.notification_title = title;
         this.notification_body = body;
+        this.notification_type = type;
     }
 
 }

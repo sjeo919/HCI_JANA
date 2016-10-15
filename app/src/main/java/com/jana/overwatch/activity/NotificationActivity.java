@@ -41,7 +41,7 @@ public class NotificationActivity extends AppCompatActivity implements PopupMenu
         mNotifications = NotificationListHolder.getInstance().getNotificationList();
         if(mNotifications.size() == 0) {
             jsonNotificationList = sharedPreferences.getString("Notification_List", "");
-            if (!jsonNotificationList.equals("null")){
+            if (!jsonNotificationList.equals("null") && !jsonNotificationList.equals("")){
                 Type type = new TypeToken<List<Notification>>(){}.getType();
                 mNotifications = gson.fromJson(jsonNotificationList, type);
             }
@@ -49,7 +49,7 @@ public class NotificationActivity extends AppCompatActivity implements PopupMenu
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mNotifications.add(new Notification(extras.getString("title"), extras.getString("body")));
+            mNotifications.add(new Notification(extras.getString("title"), extras.getString("body"), extras.getString("type")));
         }
 
         jsonNotificationList = gson.toJson(mNotifications);

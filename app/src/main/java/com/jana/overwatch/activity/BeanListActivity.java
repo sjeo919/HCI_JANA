@@ -104,6 +104,7 @@ public class BeanListActivity extends AppCompatActivity implements PopupMenu.OnM
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("Master_API_Key", "");
+                editor.putString("Notification_List", "");
                 editor.commit();
 
                 Intent signoutIntent = new Intent(this, MainActivity.class);
