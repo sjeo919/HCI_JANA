@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -22,20 +24,33 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.jana.overwatch.POJO.APIResponse;
+import com.jana.overwatch.POJO.Entry;
+import com.jana.overwatch.POJO.Stream;
 import com.jana.overwatch.R;
 import com.jana.overwatch.helper.DeviceListHolder;
 import com.jana.overwatch.POJO.Device;
+import com.jana.overwatch.helper.UtilFunction;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 
+import org.w3c.dom.Text;
+
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DeviceActivity extends AppCompatActivity {
 
     private Device mDevice;
+    private Stream[] mStreams;
+    private Entry[] mEntries;
     final Context mContext = this;
-    private Button mEditButton;
+    private ImageButton mEditButton;
+    private TextView mDeviceName, mDeviceDescription, mTemperature, mMovement;
     private int devicePosition;
     private SharedPreferences sharedPreferences;
 
@@ -48,7 +63,17 @@ public class DeviceActivity extends AppCompatActivity {
         int devicePosition = incomingIntent.getIntExtra("device_position", 0);
         sharedPreferences = getSharedPreferences("Overwatch_JANA", Context.MODE_PRIVATE);
         mDevice = DeviceListHolder.getInstance().getDeviceList().get(devicePosition);
-        mEditButton = (Button) findViewById(R.id.edit_button);
+        mEditButton = (ImageButton) findViewById(R.id.edit_button);
+        mDeviceName = (TextView) findViewById(R.id.bean_name_details);
+        mDeviceDescription = (TextView) findViewById(R.id.bean_description_details);
+        mTemperature = (TextView) findViewById(R.id.bean_temperature_details);
+        mMovement = (TextView) findViewById(R.id.bean_movement_details);
+
+        mDeviceName.setText(mDevice.name);
+        mDeviceDescription.setText(mDevice.description);
+
+        fetchTemperatureLog();
+        fetchTriggerLog();
 
         mEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +164,89 @@ public class DeviceActivity extends AppCompatActivity {
             }
         };
 
+        queue.add(stringRequest);
+    }
+
+    private void fetchTemperatureLog() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://api-m2x.att.com/v2/devices/" + mDevice.id + "/streams";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Moshi moshi = new Moshi.Builder().build();
+                        JsonAdapter<APIResponse> jsonAdapter = moshi.adapter(APIResponse.class);
+                        try {
+                            APIResponse apiResponse = jsonAdapter.fromJson(response);
+                            mStreams = apiResponse.streams;
+
+                            for (Stream stream: mStreams) {
+                                if (stream.display_name.equals("Temperature")) {
+                                    mTemperature.setText(stream.value + "°C");
+                                }
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error//", error.toString());
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("X-M2X-KEY", sharedPreferences.getString("Master_API_Key", ""));
+
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    private void fetchTriggerLog() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://api-m2x.att.com/v2/devices/" + mDevice.id + "/triggers/log";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Moshi moshi = new Moshi.Builder().build();
+                        JsonAdapter<APIResponse> jsonAdapter = moshi.adapter(APIResponse.class);
+                        try {
+                            APIResponse apiResponse = jsonAdapter.fromJson(response);
+                            mEntries = apiResponse.entries;
+
+                            for (Entry entry: mEntries) {
+                                if (entry.trigger.equals("Movement")) {
+                                    mMovement.setText(UtilFunction.formatLastTimeUsed(entry.timeStamp)+" ago");
+                                    break;
+                                }
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error//", error.toString());
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("X-M2X-KEY", sharedPreferences.getString("Master_API_Key", ""));
+
+                return params;
+            }
+        };
         queue.add(stringRequest);
     }
 }
