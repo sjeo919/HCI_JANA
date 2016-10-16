@@ -1,16 +1,17 @@
 package com.jana.overwatch.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -34,12 +35,7 @@ import com.jana.overwatch.helper.UtilFunction;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
-import org.w3c.dom.Text;
-
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +47,7 @@ public class DeviceActivity extends AppCompatActivity {
     final Context mContext = this;
     private ImageButton mEditButton;
     private TextView mDeviceName, mDeviceDescription, mTemperature, mMovement;
+    private ProgressDialog mProgressDialog;
     private int devicePosition;
     private SharedPreferences sharedPreferences;
 
@@ -71,6 +68,9 @@ public class DeviceActivity extends AppCompatActivity {
 
         mDeviceName.setText(mDevice.name);
         mDeviceDescription.setText(mDevice.description);
+        mProgressDialog = new ProgressDialog(DeviceActivity.this);
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setMessage("Updating...");
 
         fetchTemperatureLog();
         fetchTriggerLog();
@@ -101,7 +101,17 @@ public class DeviceActivity extends AppCompatActivity {
                                         if (userNameInput.getText().toString().equals("")) {
                                             Toast.makeText(mContext, "Device Name is Required", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            updateDevice(userNameInput.getText().toString(), userDescInput.getText().toString(), mDevice.visibility);
+                                            mProgressDialog.show();
+                                            Handler handler = new Handler();
+                                            handler.postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    updateDevice(userNameInput.getText().toString(), userDescInput.getText().toString(), mDevice.visibility);
+                                                    mDeviceName.setText(userNameInput.getText().toString());
+                                                    mDeviceDescription.setText(userDescInput.getText().toString());
+                                                    mProgressDialog.dismiss();
+                                                }
+                                            }, 1000);
                                         }
                                     }
                                 })
@@ -112,6 +122,7 @@ public class DeviceActivity extends AppCompatActivity {
                                         dialogInterface.cancel();
                                     }
                                 });
+
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
             }
