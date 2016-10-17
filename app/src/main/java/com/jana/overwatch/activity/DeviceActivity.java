@@ -48,7 +48,6 @@ public class DeviceActivity extends AppCompatActivity {
     private ImageButton mEditButton;
     private TextView mDeviceName, mDeviceDescription, mTemperature, mMovement;
     private ProgressDialog mProgressDialog;
-    private int devicePosition;
     private SharedPreferences sharedPreferences;
 
     @Override

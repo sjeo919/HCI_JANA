@@ -70,7 +70,6 @@ public class BeanListActivity extends AppCompatActivity implements PopupMenu.OnM
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 Device clickedDevice = mDevices.get(position);
-                Toast.makeText(getApplicationContext(), clickedDevice.name, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(getApplicationContext(), DeviceActivity.class);
                 intent.putExtra("device_position", position);
