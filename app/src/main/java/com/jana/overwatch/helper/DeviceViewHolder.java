@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.jana.overwatch.R;
 
 /**
- * Created by Owner on 2016-10-06.
+ * Created by Andrew Jeong on 2016-10-06.
  */
 
 public class DeviceViewHolder extends RecyclerView.ViewHolder {

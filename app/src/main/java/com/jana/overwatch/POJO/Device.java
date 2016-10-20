@@ -17,7 +17,6 @@ public class Device implements Parcelable {
     public String serial;
     public String[] tags;
     public String url;
-    public Location location;
     public String created;
     public String updated;
     public String key;

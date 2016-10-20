@@ -49,7 +49,7 @@ public class NotificationActivity extends AppCompatActivity implements PopupMenu
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mNotifications.add(new Notification(extras.getString("title"), extras.getString("body"), extras.getString("type")));
+            mNotifications.add(0, new Notification(extras.getString("title"), extras.getString("body"), extras.getString("type")));
         }
 
         jsonNotificationList = gson.toJson(mNotifications);
@@ -87,6 +87,8 @@ public class NotificationActivity extends AppCompatActivity implements PopupMenu
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 sharedPreferences.edit().putString("Notification_List", "null").commit();
+                                mNotifications.clear();
+                                adapter.notifyDataSetChanged();
                                 finish();
                                 startActivity(getIntent());
                             }
@@ -95,6 +97,7 @@ public class NotificationActivity extends AppCompatActivity implements PopupMenu
                         .create().show();
                 return true;
             case R.id.refresh_option:
+                adapter.notifyDataSetChanged();
                 finish();
                 startActivity(getIntent());
             default:

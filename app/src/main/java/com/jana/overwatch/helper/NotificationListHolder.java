@@ -1,7 +1,5 @@
 package com.jana.overwatch.helper;
 
-import android.support.v7.widget.RecyclerView;
-
 import com.jana.overwatch.POJO.Notification;
 
 import java.util.ArrayList;

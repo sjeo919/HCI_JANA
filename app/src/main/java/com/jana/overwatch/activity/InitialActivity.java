@@ -101,7 +101,9 @@ public class InitialActivity extends AppCompatActivity {
             public void run() {
                 startActivity(intent);
                 finish();
-                successToast.show();
+                if (sharedPreferences.getString("Master_API_Key", "").length() > 1) {
+                    successToast.show();
+                }
             }
         }, 2000);
 

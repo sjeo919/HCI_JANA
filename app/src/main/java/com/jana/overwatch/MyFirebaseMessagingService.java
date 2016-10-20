@@ -41,7 +41,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d("TAG", "Message data payload: " + remoteMessage.getData());
-            mNotifications.add(new Notification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"), remoteMessage.getData().get("type")));
+            mNotifications.add(0, new Notification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"), remoteMessage.getData().get("type")));
             jsonNotificationList = gson.toJson(mNotifications);
             sharedPreferences.edit().putString("Notification_List", jsonNotificationList).commit();
 

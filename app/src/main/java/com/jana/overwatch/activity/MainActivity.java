@@ -33,8 +33,6 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText mEmail;
-    private EditText mPassword;
     private EditText mMasterKey;
     private Button mSignIn;
     private ProgressDialog mProgressDialog;
@@ -42,16 +40,6 @@ public class MainActivity extends AppCompatActivity {
     private Toast failureToast;
     private SharedPreferences sharedPreferences;
 
-    private String mReceivedState;
-    private String mCode;
-    private String mTokenType;
-    private String mAccessToken;
-    private String mScope;
-    private String mMessage = "";
-    private String mErrors = "";
-
-    private String email;
-    private String password;
     private Device[] mDevices;
     private String jsonDeviceList;
 
@@ -60,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        mEmail = (EditText) findViewById(R.id.email);
-//        mPassword = (EditText) findViewById(R.id.password);
         mSignIn = (Button) findViewById(R.id.sign_in_button);
         mMasterKey = (EditText) findViewById(R.id.masterKey);
 
@@ -83,11 +69,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplicationContext(), "Enter Master Key", Toast.LENGTH_SHORT);
                     toast.show();
                 }
-
-//                email = mEmail.getText().toString();
-//                password = mPassword.getText().toString();
-//
-//                getAuthorised();
             }
         });
     }
@@ -151,136 +132,5 @@ public class MainActivity extends AppCompatActivity {
         };
 
         queue.add(stringRequest);
-
-        //===================================================================================
-
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(requestUrl)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        M2XService serviceClient = retrofit.create(M2XService.class);
-//        Log.d("asdf", mMasterKey.getText().toString());
-//
-//        Call<List<Device>> call = serviceClient.fetchDevices();
-//        //mMasterKey.getText().toString()
-////        call.request().url()
-//        Log.d("Request//", call.request().toString());
-//        Log.d("Request//",
-//                call.request().headers().toString());
-//        call.enqueue(new Callback<List<Device>>() {
-//            @Override
-//            public void onResponse(Call<List<Device>> call, Response<List<Device>> response) {
-//                try {
-//                    mDevices = response.body();
-//                    successToast.show();
-//                    Log.d("RESPONSE", new Gson().toJson(response));
-//                    Intent intent = new Intent(getApplicationContext(), BeanListActivity.class);
-//                    intent.putParcelableArrayListExtra("device_list", (ArrayList<Device>) response.body());
-//                    startActivity(intent);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Device>> call, Throwable t) {
-//                Log.d("Failure", "Fetching// " + t.toString());
-//                if (mProgressDialog.isShowing()) {
-//                    mProgressDialog.dismiss();
-//                    failureToast.show();
-//                }
-//            }
-//        });
     }
-
-//    private void getAuthorised() {
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(authorisationUrl)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        M2XService client = retrofit.create(M2XService.class);
-//
-//        Call<OAuthClient> call = client.getAuthorised("code", email, redirectUri, mSentState, "GET");
-//
-//        call.enqueue(new Callback<OAuthClient>() {
-//            @Override
-//            public void onResponse(Call<OAuthClient> call, Response<OAuthClient> response) {
-//                try {
-//                    mCode = response.body().getCode();
-//                    mReceivedState = response.body().getCheckState();
-//                    getToken();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<OAuthClient> call, Throwable t) {
-//                Log.d("Failure", "Authorisation// " + t.toString());
-//                if (mProgressDialog.isShowing()) {
-//                    mProgressDialog.dismiss();
-//                    failureToast.show();
-//                }
-//            }
-//        });
-//    }
-//
-//    private void getToken() {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(tokenUrl)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        M2XService service = retrofit.create(M2XService.class);
-//
-//        Call<OAuthToken> call = service.getAccessToken(email, password, "authorization_code", mCode,redirectUri);
-//
-//        call.enqueue(new Callback<OAuthToken>() {
-//            @Override
-//            public void onResponse(Call<OAuthToken> call, Response<OAuthToken> response) {
-//                try {
-//                    mTokenType = response.body().getTokenType();
-//                    mAccessToken = response.body().getAccessToken();
-//                    mScope = response.body().getScope();
-//                    mMessage = response.body().getMessage();
-//                    mErrors = response.body().getErrors();
-//
-//                    if (mProgressDialog.isShowing()) {
-//                        mProgressDialog.dismiss();
-//                        if (mMessage.equals("") || mErrors.equals("")) {
-//                            successToast.show();
-//                            Intent intent = new Intent(getApplicationContext(), BeanListActivity.class);
-//                            startActivity(intent);
-//                        } else {
-//                            failureToast.show();
-//                            Log.d("Failure", "Message: " + mMessage);
-//                            Log.d("Failure", "Errors: " + mErrors);
-//                        }
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<OAuthToken> call, Throwable t) {
-//                Log.d("Failure", "Token// " + t.toString());
-//                if (mProgressDialog.isShowing()) {
-//                    mProgressDialog.dismiss();
-//                    failureToast.show();
-//                }
-//            }
-//        });
-//    }
-//
-//    public String getmAccessToken() {
-//        return mAccessToken;
-//    }
-//
-//    public void setmAccessToken(String mAccessToken) {
-//        this.mAccessToken = mAccessToken;
-//    }
 }

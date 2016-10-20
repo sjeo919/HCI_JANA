@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,7 +20,6 @@ import com.jana.overwatch.R;
 import com.jana.overwatch.helper.ItemClickSupport;
 import com.jana.overwatch.helper.MainListAdapter;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.lang.reflect.Type;
 import java.util.List;
